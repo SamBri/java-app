@@ -330,8 +330,8 @@ public class App {
 
 	public static void main(String[] args) {
 
-		listingB(); // time taken : [PT0.004S,PT0.004S,PT0.005S,PT0.003S,PT0.005S] - slower response time, degrading performance
-		//listingA(); // time taken : [PT0.001S,PT0.001S,PT0.001S,PT0.001S,PT0.001S] - faster response time, better performance
+		//listingB(); // time taken : [PT0.004S,PT0.004S,PT0.005S,PT0.003S,PT0.005S] - slower response time, degrading performance
+		listingA(); // time taken : [PT0.001S,PT0.001S,PT0.001S,PT0.001S,PT0.001S] - faster response time, better performance
 
 	}
 
