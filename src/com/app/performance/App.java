@@ -328,6 +328,10 @@ devices [Product [id=1, name=iPhone 13, productId=176a4f62-b622-4ad6-8526-a49235
 
 public class App {
 
+	
+	// latency.
+	// Throughput.
+	
 	public static void main(String[] args) {
 
 		//listingB(); // time taken : [PT0.004S,PT0.004S,PT0.005S,PT0.003S,PT0.005S] - slower response time, degrading performance
