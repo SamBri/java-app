@@ -24,6 +24,9 @@ public class ReliableController {
 		
 		System.out.println(x); // 1.
 		
+		
+		
+		// x= new ReliableController().x; // lambda.
 		ReliableController rc = new ReliableController();
 		x = rc.x;
 		
