@@ -17,5 +17,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/lombok-1.18.38.jar"/>
+	<classpathentry kind="lib" path="lib/jooq-3.20.5.jar"/>
+	<classpathentry kind="lib" path="lib/jooq-codegen-3.20.5.jar"/>
+	<classpathentry kind="lib" path="lib/jooq-meta-3.20.5.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta.xml.bind-api-3.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/reactive-streams-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/r2dbc-spi-1.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.30.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
