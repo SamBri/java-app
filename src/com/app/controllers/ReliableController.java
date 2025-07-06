@@ -1,76 +1,33 @@
 package com.app.controllers;
 
+import org.jooq.Result;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.jooq.Record;
+
+import com.app.dao.ApplicationCursorDao;
 
 @RestController
 @RequestMapping("/reliable")
 @CrossOrigin(origins = "*") // enable cross origin on the controller level for all origins
 //@Slf4j
 public class ReliableController {
-	
 
-	int x; // instance variable - default value, 0
+	// fetch all app cursors.
+	@GetMapping("/application-cursors")
+	public List<?> fetchCursors() {
 
-	
-	
-    // dao instance.
-	// fetch a cursor
-	public Object getAppCursor(String cursorId) {
-		return null;	
+		Result<Record> cursors = new ApplicationCursorDao().fetchCursors();
+
+		return cursors;
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String [] args) {
-		
-		int x;
-		x = 1; // robust.
-		
-		System.out.println(x); // 1.
-		
-		
-		
-		// x= new ReliableController().x; // lambda.
-		ReliableController rc = new ReliableController();
-		x = rc.x;
-		
-		System.out.println(x); // 0.
-		
-		// payment app.
-		// frs. nfs. 
-		
-		// reliability.
-		
-		// performance.
-		
-		// security.
-		
-		// scalability.
-		
-	}
-	
-	
-	
-	
+
 }
-
-
-class Cursor{
-	int x;
-	int y;
-	String nonce;
-}
-
-
-
