@@ -40,10 +40,10 @@
 
     <target>
       <!-- The destination package of your generated classes (within the destination directory) -->
-      <packageName>test.generated</packageName>
+      <packageName>com.app.jooq</packageName>
 
       <!-- The destination directory of your generated classes. Using Maven directory layout here -->
-      <directory>./src/main/java/com/app/jooq/</directory>
+      <directory>./src/</directory>
     </target>
   </generator>
 </configuration>
