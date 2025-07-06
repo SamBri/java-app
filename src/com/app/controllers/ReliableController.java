@@ -14,6 +14,21 @@ public class ReliableController {
 	
 
 	int x; // instance variable - default value, 0
+
+	
+	
+    // dao instance.
+	// fetch a cursor
+	public Object getAppCursor(String cursorId) {
+		return null;	
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
