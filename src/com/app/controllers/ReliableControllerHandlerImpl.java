@@ -2,7 +2,9 @@ package com.app.controllers;
 
 import org.jooq.Result;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,19 +17,154 @@ import com.app.dto.AppCursorDto;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-// /reliable/cursors
-// /reliable/cursors
+// /reliable/cursors - Create Cursors | POST
+// /reliable/cursors - Fetch All Cursors | GET
+// /reliable/cursors/:cursorId - Fetch Cursor by cursorId | GET
+// /reliable/cursors/:cursorId - Update Cursor | PUT
+// /reliable/cursors/:cursorId - Delete cursor | DELETE 
+///reliable/cursors/trash - check cursors bin.
+
+///reliable/builds - Create Cursors | POST
+///reliable/builds - Fetch All Cursors | GET
+///reliable/builds/:buildId - Fetch Cursor by cursorId | GET
+///reliable/builds/:buildId - Update Cursor | PUT
+///reliable/builds/:buildId - Delete cursor | DELETE 
 public class ReliableControllerHandlerImpl implements HttpHandler {
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 
-		//
-
 		System.out.println("exchange request method:" + exchange.getRequestMethod());
 		System.out.println("exchange request path:" + exchange.getRequestURI());
 
-		String response = "This is the response from the server.";
+		String service = exchange.getRequestURI().getPath().replace("/api", ""); // remove the root for service
+																					// selection
+		String method = exchange.getRequestMethod();
+		String endpoint = null;
+
+		StringBuilder requestPayload = null;
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(exchange.getRequestBody()))) {
+
+			String str = null;
+			requestPayload = new StringBuilder();
+			while ((str = br.readLine()) != null) {
+				requestPayload.append(str);
+			}
+		} catch (Exception e) {
+
+		}
+
+		String response = null;
+		// cursor service
+		if (service.startsWith("/cursors")) {
+
+			// at which endpoint.
+			endpoint = service;
+
+			switch (endpoint) {
+
+			// /cursors - Create Cursors | POST
+			// /cursors - Fetch All Cursors | GET
+			case "/cursors": {
+				response = switch (method) {
+
+				case "POST": {
+					// string to json.
+					System.out.println(requestPayload);
+					AppCursorDto dto1 = new AppCursorDto();
+					yield String.valueOf(createCursor(dto1));
+				}
+				case "GET": {
+					yield fetchCursors().toString();
+				}
+				case "PUT": {
+					yield null;
+				}
+				case "PATCH": {
+					yield null;
+				}
+				case "DELETE": {
+					yield null;
+				}
+
+				default: {
+					yield null;
+				}
+
+				};
+			}
+				break;
+
+			case "/cursors/:cursorId": {
+				switch (method) {
+
+				case "POST":
+					break;
+				case "GET":
+					break;
+				case "PUT":
+					break;
+				case "PATCH":
+					break;
+				case "DELETE":
+					break;
+
+				}
+			}
+				break;
+
+			}
+
+		}
+
+		// build
+		if (service.startsWith("builds")) {
+
+			switch (endpoint) {
+
+			// /builds - Create Cursors | POST
+			// /cursors - Fetch All Cursors | GET
+			case "/builds": {
+				switch (method) {
+
+				case "POST":
+					break;
+				case "GET":
+					break;
+				case "PUT":
+					break;
+				case "PATCH":
+					break;
+				case "DELETE":
+					break;
+
+				}
+			}
+				break;
+
+			case "/builds/:buildId": {
+				switch (method) {
+
+				case "POST":
+					break;
+				case "GET":
+					break;
+				case "PUT":
+					break;
+				case "PATCH":
+					break;
+				case "DELETE":
+					break;
+
+				}
+			}
+				break;
+
+			}
+
+		}
+
+		// String response = "This is the response from the server.";
 		exchange.sendResponseHeaders(200, response.length());
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
