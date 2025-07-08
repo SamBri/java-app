@@ -6,16 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/spring-web-6.1.17.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/spring-webmvc-6.1.17.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/lombok-1.18.38.jar"/>
 	<classpathentry kind="lib" path="lib/jooq-3.20.5.jar"/>
 	<classpathentry kind="lib" path="lib/jooq-codegen-3.20.5.jar"/>
@@ -24,6 +14,5 @@
 	<classpathentry kind="lib" path="lib/reactive-streams-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/r2dbc-spi-1.0.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.30.jar"/>
-	<classpathentry kind="lib" path="lib/tomcat-embed-core-11.0.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
