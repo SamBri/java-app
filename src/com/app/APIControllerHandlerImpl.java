@@ -1,8 +1,10 @@
-package com.app.controllers;
+package com.app;
 
 import java.io.IOException;
 import java.net.URI;
 
+import com.app.controllers.ReliableControllerHandlerImpl;
+import com.app.controllers.UsersControllerHandlerImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
