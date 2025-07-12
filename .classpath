@@ -15,7 +15,7 @@
 	<classpathentry kind="lib" path="lib/reactive-streams-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/r2dbc-spi-1.0.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.10.1.jar"/>
-	<classpathentry kind="lib" path="lib/jdk-httpserver-custom.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-j-9.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/jdk-httpserver-custom-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

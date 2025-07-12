@@ -4,16 +4,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.http.HttpHeaders;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Field;
+import org.jooq.JSONFormat;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.TableField;
+import org.jooq.impl.UpdatableRecordImpl;
 
 import com.app.dao.ApplicationCursorDao;
 import com.app.dto.AppCursorDto;
+import static com.app.jooq.tables.ApplicationCursors.APPLICATION_CURSORS;
+import com.app.jooq.tables.records.ApplicationCursorsRecord;
 import com.google.gson.Gson;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
 
 // /reliable/cursors - Create Cursors | POST
 // /reliable/cursors - Fetch All Cursors | GET
@@ -29,19 +39,18 @@ import com.sun.net.httpserver.HttpHandler;
 ///reliable/builds/:buildId - Delete cursor | DELETE 
 public class ReliableControllerHandlerImpl implements HttpHandler {
 
-
-
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 
 		System.out.println("exchange request method:" + exchange.getRequestMethod());
 		System.out.println("exchange request path:" + exchange.getRequestURI());
+		System.out.println("exchange request headers:" + exchange.getRequestHeaders().toString());
 
 		// String service = exchange.getRequestURI().getPath().replace("/api/reliable",
 		// ""); // remove the root for service
 
 		String serviceUrl = exchange.getServiceUrl();
-		String service  = serviceUrl.replace("/reliable","");
+		String service = serviceUrl.replace("/reliable", "");
 
 		// selection
 		String method = exchange.getRequestMethod();
@@ -65,6 +74,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 			// at which endpoint.
 			endpoint = service;
+			Gson cursorsJson = null;
 
 			switch (endpoint) {
 
@@ -77,12 +87,19 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 					// string to json.
 					System.out.println("req:" + requestPayload);
 					AppCursorDto dto1 = new AppCursorDto();
-					dto1 = new Gson().fromJson(requestPayload.toString(), AppCursorDto.class);
+					cursorsJson = new Gson();
+					dto1 = cursorsJson.fromJson(requestPayload.toString(), AppCursorDto.class);
 					System.out.println("dto:" + dto1);
-					yield String.valueOf(createCursor(dto1));
+					exchange.getResponseHeaders().rawAdd("Content-Type","application/json");
+					exchange.sendResponseHeaders(201, dto1.toString().length());
+					yield createCursor(dto1);
 				}
 				case "GET": {
-					yield fetchCursors().toString();
+
+					cursorsJson = new Gson();
+					exchange.getResponseHeaders().rawAdd("Content-Type","application/json");
+					exchange.sendResponseHeaders(200, cursorsJson.toJson(fetchCursors()).toString().length());
+					yield cursorsJson.toJson(fetchCursors());
 				}
 				case "PUT": {
 					yield null;
@@ -171,48 +188,66 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 		}
 
-		// String response = "This is the response from the server.";
-		exchange.sendResponseHeaders(200, response.length());
+	
 		OutputStream os = exchange.getResponseBody();
+		System.out.println("response headers ::" +exchange.getResponseHeaders());
 		os.write(response.getBytes());
 		os.close();
 	}
 
 	// fetch all app cursors.
-	public static List<?> fetchCursors() {
+	public static List<AppCursorDto> fetchCursors() {
 
 		Result<Record> cursors = new ApplicationCursorDao().fetchCursors();
 
-		return cursors;
+		final List<AppCursorDto> list = new ArrayList<>();
+
+		cursors.forEach((e) -> {
+			AppCursorDto dto = new AppCursorDto();
+			dto.setId(e.get(APPLICATION_CURSORS.ID));
+			dto.setName(e.get(APPLICATION_CURSORS.NAME));
+			dto.setNonce(e.get(APPLICATION_CURSORS.NONCE));
+			dto.setPosX(e.get(APPLICATION_CURSORS.POS_X));
+			dto.setPosY(e.get(APPLICATION_CURSORS.POS_Y));
+
+			list.add(dto);
+		});
+
+		return list;
 
 	}
 
 	// create cursor
-	public static int createCursor(AppCursorDto dto) {
+	public static String createCursor(AppCursorDto dto) {
 
-		return new ApplicationCursorDao().createCursor(dto);
+		
+		if( new ApplicationCursorDao().createCursor(dto) == 1) {
+			return "created";
+		}
+		
+		return "failed";
 
 	}
 
 	public static void main(String[] args) {
 
 		// System.out.println(fetchCursors()); // read cursors.
-		//javax.net.debug=all
-		//System.setProperty("javax.net.debug","all"); 
+		// javax.net.debug=all
+		// System.setProperty("javax.net.debug","all");
 
-		AppCursorDto dto1 = new AppCursorDto();
-		dto1.setName("eclipse");
-		dto1.setNonce("single-command");
-		dto1.setPosX(10);
-		dto1.setPosY(20);
-		System.out.println(createCursor(dto1)); // create cursors;
-
-		AppCursorDto dto2 = new AppCursorDto();
-		dto2.setName("wordpad");
-		dto2.setNonce("multiple-command");
-		dto2.setPosX(1);
-		dto2.setPosY(100);
-		System.out.println(createCursor(dto2)); // create cursors;
+//		AppCursorDto dto1 = new AppCursorDto();
+//		dto1.setName("eclipse");
+//		dto1.setNonce("single-command");
+//		dto1.setPosX(10);
+//		dto1.setPosY(20);
+//		System.out.println(createCursor(dto1)); // create cursors;
+//
+//		AppCursorDto dto2 = new AppCursorDto();
+//		dto2.setName("wordpad");
+//		dto2.setNonce("multiple-command");
+//		dto2.setPosX(1);
+//		dto2.setPosY(100);
+//		System.out.println(createCursor(dto2)); // create cursors;
 
 		System.out.println(fetchCursors()); // read cursors.
 

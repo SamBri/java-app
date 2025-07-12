@@ -17,6 +17,7 @@ public class APIControllerHandlerImpl implements HttpHandler {
 
 		URI requestUri = exchange.getRequestURI();
 		System.out.println(requestUri.toString());
+		System.out.println("exchange request @ headers:" + exchange.getRequestHeaders().toString());
 
 	//	String path = PathUtils.canonicalise(requestUri, "/api");
 
