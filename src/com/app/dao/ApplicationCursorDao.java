@@ -61,8 +61,13 @@ public class ApplicationCursorDao {
 		appCursorRecord.setPosX(dto.getPosX());
 		appCursorRecord.setPosY(dto.getPosY());
 
-		int store = appCursorRecord.store();
-		
+		int store = 0;
+		try {
+			store = appCursorRecord.store();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return store;
 
 	}
