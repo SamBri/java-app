@@ -23,7 +23,7 @@
  * questions.
  */
 
-package com.app;
+package sun.net.httpserver;
 
 import java.io.*;
 import java.nio.*;
@@ -33,13 +33,14 @@ import javax.net.ssl.*;
 import java.util.*;
 import com.sun.net.httpserver.*;
 import com.sun.net.httpserver.spi.*;
-import sun.net.httpserver.ExchangeImpl;
-
 
 class HttpExchangeImpl extends HttpExchange {
 
     ExchangeImpl impl;
 
+    // mutate path.
+    
+    
     HttpExchangeImpl (ExchangeImpl impl) {
         this.impl = impl;
     }
@@ -53,7 +54,16 @@ class HttpExchangeImpl extends HttpExchange {
     }
 
     public URI getRequestURI () {
+    	
+    	
         return impl.getRequestURI();
+    }
+    
+    
+    public String getServiceURI () {
+    	
+    	return getRequestURI().getPath().replace("/api/reliable", "");
+      //  return impl.getRequestURI();
     }
 
     public String getRequestMethod (){

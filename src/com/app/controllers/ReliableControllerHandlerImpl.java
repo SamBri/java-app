@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.json.JSONObject;
 
 import com.app.dao.ApplicationCursorDao;
 import com.app.dto.AppCursorDto;
@@ -30,13 +29,19 @@ import com.sun.net.httpserver.HttpHandler;
 ///reliable/builds/:buildId - Delete cursor | DELETE 
 public class ReliableControllerHandlerImpl implements HttpHandler {
 
+
+
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 
 		System.out.println("exchange request method:" + exchange.getRequestMethod());
 		System.out.println("exchange request path:" + exchange.getRequestURI());
 
-		String service = exchange.getRequestURI().getPath().replace("/api/reliable", ""); // remove the root for service
+		// String service = exchange.getRequestURI().getPath().replace("/api/reliable",
+		// ""); // remove the root for service
+
+		String service = null;// exchange.getRequestURI(); // remove the root for service
+
 		// selection
 		String method = exchange.getRequestMethod();
 		String endpoint = null;
@@ -69,10 +74,10 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 				case "POST": {
 					// string to json.
-					System.out.println("req:"+requestPayload);
+					System.out.println("req:" + requestPayload);
 					AppCursorDto dto1 = new AppCursorDto();
 					dto1 = new Gson().fromJson(requestPayload.toString(), AppCursorDto.class);
-					System.out.println("dto:"+dto1);
+					System.out.println("dto:" + dto1);
 					yield String.valueOf(createCursor(dto1));
 				}
 				case "GET": {

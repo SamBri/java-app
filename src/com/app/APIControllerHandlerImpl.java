@@ -75,7 +75,7 @@ public class APIControllerHandlerImpl implements HttpHandler {
 	public static void main(String[] args) {
 		System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/test"), "/api"));
 	
-		System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors"), "/api"));
+		System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/"), "/api"));
 
 	}
 
