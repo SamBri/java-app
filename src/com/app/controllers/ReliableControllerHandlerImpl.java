@@ -40,7 +40,8 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 		// String service = exchange.getRequestURI().getPath().replace("/api/reliable",
 		// ""); // remove the root for service
 
-		String service = null;// exchange.getRequestURI(); // remove the root for service
+		String serviceUrl = exchange.getServiceUrl();
+		String service  = serviceUrl.replace("/reliable","");
 
 		// selection
 		String method = exchange.getRequestMethod();
@@ -196,6 +197,8 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 	public static void main(String[] args) {
 
 		// System.out.println(fetchCursors()); // read cursors.
+		//javax.net.debug=all
+		//System.setProperty("javax.net.debug","all"); 
 
 		AppCursorDto dto1 = new AppCursorDto();
 		dto1.setName("eclipse");

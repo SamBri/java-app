@@ -11,36 +11,6 @@ import com.sun.net.httpserver.HttpHandler;
 //api
 public class APIControllerHandlerImpl implements HttpHandler {
 
-	// a member.
-	class PathUtils {
-
-		static String canonicalise(URI uri, String root) {
-			String path = uri.getPath().replace(root, "");
-			path = prioritize(path);
-			return path;
-		}
-
-		static String prioritize(String path) {
-
-			// void test(T t);
-
-			for (int i = 0, slash = 0; i < path.length(); i++) {
-
-				if (path.charAt(i) == '/') {
-					slash++;
-				}
-
-				if (slash == 3) {
-
-					return path.replace(path.substring(i), "/*");
-				}
-			}
-
-			return path;
-
-		}
-
-	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
@@ -48,13 +18,15 @@ public class APIControllerHandlerImpl implements HttpHandler {
 		URI requestUri = exchange.getRequestURI();
 		System.out.println(requestUri.toString());
 
-		String path = PathUtils.canonicalise(requestUri, "/api");
+	//	String path = PathUtils.canonicalise(requestUri, "/api");
 
+		String serviceUrl = exchange.getServiceUrl();
+		
 		System.out.println(exchange.getRequestURI());
 
 		HttpHandler handler = null;
 
-		handler = switch (path) {
+		handler = switch (serviceUrl) {
 		case "/reliable/cursors":
 		case "/reliable/cursors/*": {
 			handler = new ReliableControllerHandlerImpl();
@@ -65,7 +37,7 @@ public class APIControllerHandlerImpl implements HttpHandler {
 			yield handler;
 		}
 		default:
-			throw new UnsupportedOperationException("Handler not found : " + path);
+			throw new UnsupportedOperationException("Handler not found : " + serviceUrl);
 		};
 
 		handler.handle(exchange);
@@ -73,9 +45,9 @@ public class APIControllerHandlerImpl implements HttpHandler {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/test"), "/api"));
+	//	System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/test"), "/api"));
 	
-		System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/"), "/api"));
+	//	System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/"), "/api"));
 
 	}
 

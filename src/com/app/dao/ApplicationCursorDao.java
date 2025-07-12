@@ -19,13 +19,18 @@ import com.app.jooq.tables.records.ApplicationCursorsRecord;
 public class ApplicationCursorDao {
 
 	private String userName = "root";
-	private String password = "BlueObjectx1";
-	private String url = "jdbc:mysql://localhost:3306/java_app";
+	private String password = "BlueObjectx1"; // change as you want
+	private String url = "jdbc:mysql://localhost:3306/java_app"; 
 
 // make a db connection.
 	public Connection getConnection() {
 
 		try {
+           // Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			
+			//System.setProperty("javax.net.ssl.keyStore","C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Data\\keystore"); 
+			//System.setProperty("javax.net.ssl.keyStorePassword",password);
+
 			Connection conn = DriverManager.getConnection(url, userName, password);
 			return conn;
 		}
@@ -58,6 +63,7 @@ public class ApplicationCursorDao {
 		ApplicationCursorsRecord appCursorRecord = createCursor.newRecord(APPLICATION_CURSORS);
 		appCursorRecord.setCursorId(UUID.randomUUID().toString()); // uuid id;
 		appCursorRecord.setName(dto.getName());
+		appCursorRecord.setNonce(dto.getNonce()); // forget to add nonce, // comment out.
 		appCursorRecord.setPosX(dto.getPosX());
 		appCursorRecord.setPosY(dto.getPosY());
 
