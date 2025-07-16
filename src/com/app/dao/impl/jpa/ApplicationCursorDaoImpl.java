@@ -1,4 +1,4 @@
-package com.app.dao.impl;
+package com.app.dao.impl.jpa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,7 +18,7 @@ import com.app.dto.AppCursorDto;
 import com.app.jooq.tables.records.ApplicationCursorsRecord;
 
 //Application Cursor Dao
-public class JpaApplicationCursorDaoImpl implements ApplicationCursorDao {
+public class ApplicationCursorDaoImpl implements ApplicationCursorDao {
 
 	private String userName = "root";
 	private String password = "BlueObjectx1"; // change as you want

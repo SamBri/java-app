@@ -13,6 +13,6 @@ public interface ApplicationCursorDao {
 	
 	int createCursor(AppCursorDto dto);
 	
-	 List fetchCursors();
+	List fetchCursors();
 
 }

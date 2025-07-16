@@ -15,10 +15,12 @@ import org.jooq.Result;
 import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 
-import com.app.dao.impl.JooqApplicationCursorDaoImpl;
+import com.app.dao.ApplicationCursorDao;
+import com.app.dao.impl.jooq.ApplicationCursorDaoImpl;
 import com.app.dto.AppCursorDto;
 import static com.app.jooq.tables.ApplicationCursors.APPLICATION_CURSORS;
 import com.app.jooq.tables.records.ApplicationCursorsRecord;
+import com.app.services.ApplicationCursorService;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -38,6 +40,11 @@ import com.sun.net.httpserver.HttpHandler;
 ///reliable/builds/:buildId - Update Cursor | PUT
 ///reliable/builds/:buildId - Delete cursor | DELETE 
 public class ReliableControllerHandlerImpl implements HttpHandler {
+	
+	
+//	private ApplicationCursorDao cursorDao;
+	private ApplicationCursorService cursorServices;
+	
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
@@ -92,14 +99,14 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 					System.out.println("dto:" + dto1);
 					exchange.getResponseHeaders().rawAdd("Content-Type","application/json");
 					exchange.sendResponseHeaders(201, dto1.toString().length());
-					yield createCursor(dto1);
+				//	yield  createCursor(dto1);
 				}
 				case "GET": {
 
 					cursorsJson = new Gson();
 					exchange.getResponseHeaders().rawAdd("Content-Type","application/json");
-					exchange.sendResponseHeaders(200, cursorsJson.toJson(fetchCursors()).toString().length());
-					yield cursorsJson.toJson(fetchCursors());
+				//	exchange.sendResponseHeaders(200, cursorsJson.toJson(fetchCursors()).toString().length());
+				//	yield cursorsJson.toJson(fetchCursors());
 				}
 				case "PUT": {
 					yield null;
@@ -195,39 +202,39 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 		os.close();
 	}
 
-	// fetch all app cursors.
-	public static List<AppCursorDto> fetchCursors() {
-
-		Result<Record> cursors = new JooqApplicationCursorDaoImpl().fetchCursors();
-
-		final List<AppCursorDto> list = new ArrayList<>();
-
-		cursors.forEach((e) -> {
-			AppCursorDto dto = new AppCursorDto();
-			dto.setId(e.get(APPLICATION_CURSORS.ID));
-			dto.setName(e.get(APPLICATION_CURSORS.NAME));
-			dto.setNonce(e.get(APPLICATION_CURSORS.NONCE));
-			dto.setPosX(e.get(APPLICATION_CURSORS.POS_X));
-			dto.setPosY(e.get(APPLICATION_CURSORS.POS_Y));
-
-			list.add(dto);
-		});
-
-		return list;
-
-	}
-
-	// create cursor
-	public static String createCursor(AppCursorDto dto) {
-
-		
-		if( new JooqApplicationCursorDaoImpl().createCursor(dto) == 1) {
-			return "created";
-		}
-		
-		return "failed";
-
-	}
+//	// fetch all app cursors.
+//	public static List<AppCursorDto> fetchCursors() {
+//
+//		Result<Record> cursors = new ApplicationCursorDaoImpl().fetchCursors();
+//
+//		final List<AppCursorDto> list = new ArrayList<>();
+//
+//		cursors.forEach((e) -> {
+//			AppCursorDto dto = new AppCursorDto();
+//			dto.setId(e.get(APPLICATION_CURSORS.ID));
+//			dto.setName(e.get(APPLICATION_CURSORS.NAME));
+//			dto.setNonce(e.get(APPLICATION_CURSORS.NONCE));
+//			dto.setPosX(e.get(APPLICATION_CURSORS.POS_X));
+//			dto.setPosY(e.get(APPLICATION_CURSORS.POS_Y));
+//
+//			list.add(dto);
+//		});
+//
+//		return list;
+//
+//	}
+//
+//	// create cursor
+//	public static String createCursor(AppCursorDto dto) {
+//
+//		
+//		if( new ApplicationCursorDaoImpl().createCursor(dto) == 1) {
+//			return "created";
+//		}
+//		
+//		return "failed";
+//
+//	}
 
 	public static void main(String[] args) {
 
@@ -249,7 +256,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 //		dto2.setPosY(100);
 //		System.out.println(createCursor(dto2)); // create cursors;
 
-		System.out.println(fetchCursors()); // read cursors.
+	//	System.out.println(fetchCursors()); // read cursors.
 
 	}
 
