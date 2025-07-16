@@ -97,7 +97,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 				case "POST": {
 					// string to json.
-					//cursorServices = new ApplicationCursorServiceImpl(); // a new service call
+					// cursorServices = new ApplicationCursorServiceImpl(); // a new service call
 					System.out.println("req:" + requestPayload);
 					AppCursorDto dto1 = new AppCursorDto();
 					cursorsJson = new Gson();
@@ -109,12 +109,12 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 				}
 				case "GET": {
 
-				 //	cursorServices = new ApplicationCursorServiceImpl(); // a new service call
+					// cursorServices = new ApplicationCursorServiceImpl(); // a new service call
 					cursorsJson = new Gson();
 					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
-					// exchange.sendResponseHeaders(200,
-					// cursorsJson.toJson(fetchCursors()).toString().length());
-					yield cursorsJson.toJson(cursorServices.fetchCursors());
+					String str = cursorsJson.toJson(cursorServices.fetchCursors());
+					exchange.sendResponseHeaders(200, str.length());
+					yield str;
 				}
 				case "PUT": {
 					yield null;
