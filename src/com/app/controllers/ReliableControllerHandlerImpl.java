@@ -15,17 +15,19 @@ import org.jooq.Result;
 import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 
+import com.app.dao.AbstractApplicationCursorDao;
 import com.app.dao.ApplicationCursorDao;
 import com.app.dao.impl.jooq.ApplicationCursorDaoImpl;
 import com.app.dto.AppCursorDto;
 import static com.app.jooq.tables.ApplicationCursors.APPLICATION_CURSORS;
 import com.app.jooq.tables.records.ApplicationCursorsRecord;
 import com.app.services.ApplicationCursorService;
+import com.app.services.impl.ApplicationCursorServiceImpl;
+import static com.app.dao.AbstractApplicationCursorDao.*;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 
 // /reliable/cursors - Create Cursors | POST
 // /reliable/cursors - Fetch All Cursors | GET
@@ -40,11 +42,14 @@ import com.sun.net.httpserver.HttpHandler;
 ///reliable/builds/:buildId - Update Cursor | PUT
 ///reliable/builds/:buildId - Delete cursor | DELETE 
 public class ReliableControllerHandlerImpl implements HttpHandler {
-	
-	
+
 //	private ApplicationCursorDao cursorDao;
 	private ApplicationCursorService cursorServices;
-	
+
+	// JOOQ is the vendor
+	{
+		cursorServices = new ApplicationCursorServiceImpl(JOOQ);
+	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
@@ -92,21 +97,24 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 				case "POST": {
 					// string to json.
+					//cursorServices = new ApplicationCursorServiceImpl(); // a new service call
 					System.out.println("req:" + requestPayload);
 					AppCursorDto dto1 = new AppCursorDto();
 					cursorsJson = new Gson();
 					dto1 = cursorsJson.fromJson(requestPayload.toString(), AppCursorDto.class);
 					System.out.println("dto:" + dto1);
-					exchange.getResponseHeaders().rawAdd("Content-Type","application/json");
+					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
 					exchange.sendResponseHeaders(201, dto1.toString().length());
-				//	yield  createCursor(dto1);
+					yield cursorServices.createCursor(dto1);
 				}
 				case "GET": {
 
+				 //	cursorServices = new ApplicationCursorServiceImpl(); // a new service call
 					cursorsJson = new Gson();
-					exchange.getResponseHeaders().rawAdd("Content-Type","application/json");
-				//	exchange.sendResponseHeaders(200, cursorsJson.toJson(fetchCursors()).toString().length());
-				//	yield cursorsJson.toJson(fetchCursors());
+					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
+					// exchange.sendResponseHeaders(200,
+					// cursorsJson.toJson(fetchCursors()).toString().length());
+					yield cursorsJson.toJson(cursorServices.fetchCursors());
 				}
 				case "PUT": {
 					yield null;
@@ -195,9 +203,8 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 		}
 
-	
 		OutputStream os = exchange.getResponseBody();
-		System.out.println("response headers ::" +exchange.getResponseHeaders());
+		System.out.println("response headers ::" + exchange.getResponseHeaders());
 		os.write(response.getBytes());
 		os.close();
 	}
@@ -256,7 +263,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 //		dto2.setPosY(100);
 //		System.out.println(createCursor(dto2)); // create cursors;
 
-	//	System.out.println(fetchCursors()); // read cursors.
+		// System.out.println(fetchCursors()); // read cursors.
 
 	}
 
