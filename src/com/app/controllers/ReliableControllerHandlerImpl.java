@@ -48,7 +48,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 	// JOOQ is the vendor
 	{
-		cursorServices = new ApplicationCursorServiceImpl(JOOQ);
+		cursorServices = new ApplicationCursorServiceImpl(JDBC); // JDBC.
 	}
 
 	@Override

@@ -35,7 +35,9 @@ public class MoetApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 		return null;
 	}
 
-	public void fetchCursor(String cursorId) {
+	public List fetchCursor(String cursorId) {
+
+		return null;
 
 	}
 

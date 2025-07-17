@@ -2,6 +2,7 @@ package com.app.dao.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.List;
 import java.util.UUID;
 
 import org.jooq.DSLContext;
@@ -44,11 +45,12 @@ public class JooqApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 		return null;
 	}
 
-	public void fetchCursor(String cursorId) {
+	public List fetchCursor(String cursorId) {
 
 		DSLContext fetchCursor = DSL.using(getConnection(), SQLDialect.MYSQL);
 		Result<Record> result = fetchCursor.select().from(APPLICATION_CURSORS).fetch();
 
+		return null;
 	}
 
 	public Result<Record> fetchCursors() {

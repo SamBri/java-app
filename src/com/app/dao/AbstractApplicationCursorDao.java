@@ -14,7 +14,7 @@ public abstract class AbstractApplicationCursorDao {
 	
 	
 
-	public abstract void fetchCursor(String cursorId);
+	public abstract List fetchCursor(String cursorId);
 
 	public abstract int createCursor(AppCursorDto dto);
 
