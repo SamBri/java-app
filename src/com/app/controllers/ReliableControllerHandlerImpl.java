@@ -1,31 +1,16 @@
 package com.app.controllers;
 
+import static com.app.dao.AbstractApplicationCursorDao.JDBC;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.http.HttpHeaders;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.jooq.Field;
-import org.jooq.JSONFormat;
-import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.TableField;
-import org.jooq.impl.UpdatableRecordImpl;
-
-import com.app.dao.AbstractApplicationCursorDao;
-import com.app.dao.ApplicationCursorDao;
-import com.app.dao.impl.jooq.ApplicationCursorDaoImpl;
 import com.app.dto.AppCursorDto;
-import static com.app.jooq.tables.ApplicationCursors.APPLICATION_CURSORS;
-import com.app.jooq.tables.records.ApplicationCursorsRecord;
 import com.app.services.ApplicationCursorService;
 import com.app.services.impl.ApplicationCursorServiceImpl;
-import static com.app.dao.AbstractApplicationCursorDao.*;
 import com.google.gson.Gson;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -143,6 +128,10 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 				case "GET": {
 					String rawServiceUrl = exchange.getRawServiceUrl();
 					System.out.println("@@ rawServiceUrl:"+rawServiceUrl);
+					
+				//	/api/reliable/cursors/123456789
+
+					
 
 					// cursorServices = new ApplicationCursorServiceImpl(); // a new service call
 					cursorsJson = new Gson();
