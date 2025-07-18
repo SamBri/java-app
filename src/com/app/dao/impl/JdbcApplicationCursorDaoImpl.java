@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.app.dao.AbstractApplicationCursorDao;
 import com.app.dto.AppCursorDto;
@@ -57,13 +58,15 @@ public class JdbcApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 
 			while (rs.next()) {
 
+				
+				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String nonce = rs.getString("nonce");
 				cursorId = rs.getString("cursor_id");
 				Integer posX = rs.getInt("pos_x"); // autoboxing.
 				Integer posY = rs.getInt("pos_y"); // autoboxing.
 
-				cursors.add(new AppCursorDto(-1, name, posX, posY, nonce, cursorId));
+				cursors.add(new AppCursorDto(id, name, posX, posY, nonce, cursorId));
 			}
 
 		} catch (SQLException e) {
@@ -90,13 +93,14 @@ public class JdbcApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 			cursors = new ArrayList<>();
 			while (rs.next()) {
 
+				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				String nonce = rs.getString("nonce");
 				String cursorId = rs.getString("cursor_id");
 				Integer posX = rs.getInt("pos_x"); // autoboxing.
 				Integer posY = rs.getInt("pos_y"); // autoboxing.
 
-				cursors.add(new AppCursorDto(-1, name, posX, posY, nonce, cursorId));
+				cursors.add(new AppCursorDto(id, name, posX, posY, nonce, cursorId));
 			}
 
 		} catch (SQLException e) {
@@ -140,8 +144,8 @@ public class JdbcApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 				""";
 
 		createCursorQueryTxtBlk = createCursorQueryTxtBlk.replace("{pos_x}", String.valueOf(dto.getPosX()))
-				.replace("{pos_y}", String.valueOf(dto.getPosY())).replace("{nonce}", dto.getNonce())
-				.replace("{cursor_id}", dto.getCursorId()).replace("{name}", dto.getName());
+				.replace("{pos_y}", String.valueOf(dto.getPosY())).replace("{nonce}", "'"+dto.getNonce()+"'")
+				.replace("{cursor_id}", "'"+UUID.randomUUID().toString()+"'").replace("{name}", "'"+dto.getName()+"'");
 
 		int q = 0;
 		try (Connection createCursorConn = getConnection()) {

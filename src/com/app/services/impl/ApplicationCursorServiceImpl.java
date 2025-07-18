@@ -60,24 +60,10 @@ public class ApplicationCursorServiceImpl implements ApplicationCursorService {
 
 	// fetch all app cursors.
 	public List<AppCursorDto> fetchCursors() {
-
-		// cursorDao = new ApplicationCursorDaoImpl(); // making shot calls
-
 		try {
 
-			List<Record> cursors = abstractDao.fetchCursors();
-			final List<AppCursorDto> list = new ArrayList<>();
-			cursors.forEach((e) -> {
-				AppCursorDto dto = new AppCursorDto();
-				dto.setId(e.get(APPLICATION_CURSORS.ID));
-				dto.setName(e.get(APPLICATION_CURSORS.NAME));
-				dto.setNonce(e.get(APPLICATION_CURSORS.NONCE));
-				dto.setPosX(e.get(APPLICATION_CURSORS.POS_X));
-				dto.setPosY(e.get(APPLICATION_CURSORS.POS_Y));
-
-				list.add(dto);
-			});
-
+			List<AppCursorDto> list = abstractDao.fetchCursors();
+			
 			return list;
 
 		} catch (Exception e) {
@@ -85,7 +71,8 @@ public class ApplicationCursorServiceImpl implements ApplicationCursorService {
 			e.printStackTrace();
 		}
 
-       return null;
+		return null;
+
 	}
 
 	// create cursor
@@ -99,5 +86,25 @@ public class ApplicationCursorServiceImpl implements ApplicationCursorService {
 		return "failed";
 
 	}
+
+	@Override
+	public List<AppCursorDto> fetchCursor(String cursorId) {
+	
+		try {
+
+			List<AppCursorDto> list = abstractDao.fetchCursor(cursorId);
+			
+			return list;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	
+	
 
 }

@@ -63,6 +63,8 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 		String serviceUrl = exchange.getServiceUrl();
 		String service = serviceUrl.replace("/reliable", "");
+		
+		
 
 		// selection
 		String method = exchange.getRequestMethod();
@@ -132,23 +134,37 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 				};
 			}
-				break;
+			case "/cursors/*": {
+				response = switch (method) {
 
-			case "/cursors/:cursorId": {
-				switch (method) {
-
-				case "POST":
-					break;
-				case "GET":
-					break;
-				case "PUT":
-					break;
-				case "PATCH":
-					break;
-				case "DELETE":
-					break;
+				case "POST": {
 
 				}
+				case "GET": {
+					String rawServiceUrl = exchange.getRawServiceUrl();
+					System.out.println("@@ rawServiceUrl:"+rawServiceUrl);
+
+					// cursorServices = new ApplicationCursorServiceImpl(); // a new service call
+					cursorsJson = new Gson();
+					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
+					String cursorId = "";
+					String str = cursorsJson.toJson(cursorServices.fetchCursor(cursorId));
+					exchange.sendResponseHeaders(200, str.length());
+					yield str;
+				}
+				case "PUT": {
+
+				}
+				case "PATCH": {
+
+				}
+				case "DELETE": {
+
+				}
+				default:
+					yield null;
+
+				};
 			}
 				break;
 
@@ -181,7 +197,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 			}
 				break;
 
-			case "/builds/:buildId": {
+			case "/builds/*": {
 				switch (method) {
 
 				case "POST":
@@ -207,64 +223,6 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 		System.out.println("response headers ::" + exchange.getResponseHeaders());
 		os.write(response.getBytes());
 		os.close();
-	}
-
-//	// fetch all app cursors.
-//	public static List<AppCursorDto> fetchCursors() {
-//
-//		Result<Record> cursors = new ApplicationCursorDaoImpl().fetchCursors();
-//
-//		final List<AppCursorDto> list = new ArrayList<>();
-//
-//		cursors.forEach((e) -> {
-//			AppCursorDto dto = new AppCursorDto();
-//			dto.setId(e.get(APPLICATION_CURSORS.ID));
-//			dto.setName(e.get(APPLICATION_CURSORS.NAME));
-//			dto.setNonce(e.get(APPLICATION_CURSORS.NONCE));
-//			dto.setPosX(e.get(APPLICATION_CURSORS.POS_X));
-//			dto.setPosY(e.get(APPLICATION_CURSORS.POS_Y));
-//
-//			list.add(dto);
-//		});
-//
-//		return list;
-//
-//	}
-//
-//	// create cursor
-//	public static String createCursor(AppCursorDto dto) {
-//
-//		
-//		if( new ApplicationCursorDaoImpl().createCursor(dto) == 1) {
-//			return "created";
-//		}
-//		
-//		return "failed";
-//
-//	}
-
-	public static void main(String[] args) {
-
-		// System.out.println(fetchCursors()); // read cursors.
-		// javax.net.debug=all
-		// System.setProperty("javax.net.debug","all");
-
-//		AppCursorDto dto1 = new AppCursorDto();
-//		dto1.setName("eclipse");
-//		dto1.setNonce("single-command");
-//		dto1.setPosX(10);
-//		dto1.setPosY(20);
-//		System.out.println(createCursor(dto1)); // create cursors;
-//
-//		AppCursorDto dto2 = new AppCursorDto();
-//		dto2.setName("wordpad");
-//		dto2.setNonce("multiple-command");
-//		dto2.setPosX(1);
-//		dto2.setPosY(100);
-//		System.out.println(createCursor(dto2)); // create cursors;
-
-		// System.out.println(fetchCursors()); // read cursors.
-
 	}
 
 }
