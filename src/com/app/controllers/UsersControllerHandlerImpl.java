@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.jooq.Record;
 
-import com.app.dao.impl.JooqApplicationCursorDaoImpl;
+import com.app.dao.impl.jooq.ApplicationCursorDaoImpl;
 import com.app.dto.AppCursorDto;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

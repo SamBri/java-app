@@ -1,14 +1,27 @@
-package com.app.dao.impl;
+package com.app.dao.impl.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
+import java.util.UUID;
+
+import org.jooq.DSLContext;
+import org.jooq.Result;
+import org.jooq.Record;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+
+import static com.app.jooq.Tables.*;
 
 import com.app.dao.AbstractApplicationCursorDao;
+import com.app.dao.ApplicationCursorDao;
 import com.app.dto.AppCursorDto;
+import com.app.jooq.tables.records.ApplicationCursorsRecord;
 
 //Application Cursor Dao
-public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
+//public class ApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
+public class ApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
+
 
 	private String userName = "root";
 	private String password = "BlueObjectx1"; // change as you want
@@ -38,7 +51,6 @@ public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 	public List fetchCursor(String cursorId) {
 
 		return null;
-
 	}
 
 	public List fetchCursors() {

@@ -1,4 +1,4 @@
-package com.app.dao.impl;
+package com.app.dao.impl.orm.hibernate;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import com.app.dao.AbstractApplicationCursorDao;
 import com.app.dto.AppCursorDto;
 
 //Application Cursor Dao
-public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
+public class ApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 
 	private String userName = "root";
 	private String password = "BlueObjectx1"; // change as you want
