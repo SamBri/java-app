@@ -17,30 +17,8 @@ public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 	private String password = "BlueObjectx1"; // change as you want
 	private String url = "jdbc:mysql://localhost:3306/java_app";
 
-
-    @PersistenceContext
-    private EntityManager em;
-	
-// make a db connection.
-	public Connection getConnection() {
-
-		try {
-			// Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-
-			// System.setProperty("javax.net.ssl.keyStore","C:\\ProgramData\\MySQL\\MySQL
-			// Server 8.0\\Data\\keystore");
-			// System.setProperty("javax.net.ssl.keyStorePassword",password);
-
-			Connection conn = DriverManager.getConnection(url, userName, password);
-			return conn;
-		}
-
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
+	@PersistenceContext
+	private EntityManager em;
 
 	public List fetchCursor(String cursorId) {
 
