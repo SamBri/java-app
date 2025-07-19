@@ -98,8 +98,8 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 					// cursorServices = new ApplicationCursorServiceImpl(); // a new service call
 					cursorsJson = new Gson();
-					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
 					String str = cursorsJson.toJson(cursorServices.fetchCursors());
+					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
 					exchange.sendResponseHeaders(200, str.length());
 					yield str;
 				}
@@ -129,15 +129,15 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 					String rawServiceUrl = exchange.getRawServiceUrl();
 					System.out.println("@@ rawServiceUrl:"+rawServiceUrl);
 					
-				//	/api/reliable/cursors/123456789
 
-					
+					// extract params.
+					// /cursors/*
+				    String cursorId = (String) exchange.params().stream().limit(1).findAny().get();
 
 					// cursorServices = new ApplicationCursorServiceImpl(); // a new service call
 					cursorsJson = new Gson();
-					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
-					String cursorId = "";
 					String str = cursorsJson.toJson(cursorServices.fetchCursor(cursorId));
+					exchange.getResponseHeaders().rawAdd("Content-Type", "application/json");
 					exchange.sendResponseHeaders(200, str.length());
 					yield str;
 				}

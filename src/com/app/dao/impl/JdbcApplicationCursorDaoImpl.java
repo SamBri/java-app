@@ -46,7 +46,7 @@ public class JdbcApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 
 		String fetchCursorQueryTxtBlk = """
 				SELECT * FROM application_cursors WHERE cursor_id = {cursor_id};
-				""";
+				""".replace("{cursor_id}", "'"+cursorId+"'");
 
 		List<AppCursorDto> cursors = null;
 		try (Connection createCursorConn = getConnection()) {
