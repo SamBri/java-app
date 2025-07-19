@@ -7,6 +7,9 @@ import java.util.List;
 import com.app.dao.AbstractApplicationCursorDao;
 import com.app.dto.AppCursorDto;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 //Application Cursor Dao
 public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 
@@ -14,6 +17,10 @@ public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 	private String password = "BlueObjectx1"; // change as you want
 	private String url = "jdbc:mysql://localhost:3306/java_app";
 
+
+    @PersistenceContext
+    private EntityManager em;
+	
 // make a db connection.
 	public Connection getConnection() {
 
