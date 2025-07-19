@@ -15,7 +15,7 @@ import org.jooq.Result;
 import org.jooq.TableField;
 import org.jooq.impl.UpdatableRecordImpl;
 
-import com.app.dao.ApplicationCursorDao;
+import com.app.dao.impl.JooqApplicationCursorDaoImpl;
 import com.app.dto.AppCursorDto;
 import static com.app.jooq.tables.ApplicationCursors.APPLICATION_CURSORS;
 import com.app.jooq.tables.records.ApplicationCursorsRecord;
@@ -198,7 +198,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 	// fetch all app cursors.
 	public static List<AppCursorDto> fetchCursors() {
 
-		Result<Record> cursors = new ApplicationCursorDao().fetchCursors();
+		Result<Record> cursors = new JooqApplicationCursorDaoImpl().fetchCursors();
 
 		final List<AppCursorDto> list = new ArrayList<>();
 
@@ -221,7 +221,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 	public static String createCursor(AppCursorDto dto) {
 
 		
-		if( new ApplicationCursorDao().createCursor(dto) == 1) {
+		if( new JooqApplicationCursorDaoImpl().createCursor(dto) == 1) {
 			return "created";
 		}
 		
