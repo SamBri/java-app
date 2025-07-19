@@ -9,7 +9,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 //api
-public class APIControllerHandlerImpl implements HttpHandler {
+public class APIControllerHandlerImpl2 implements HttpHandler {
 
 
 	@Override
