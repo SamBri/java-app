@@ -1,7 +1,7 @@
 package com.app.dao.impl;
 
 import static com.app.jooq.tables.ApplicationCursors.APPLICATION_CURSORS;
-
+import static com.app.jooq.tables.ApplicationCursors.*;
 
 
 import java.sql.Connection;
@@ -11,10 +11,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SelectConditionStep;
 import org.jooq.impl.DSL;
 
 import com.app.dao.AbstractApplicationCursorDao;
@@ -52,9 +55,23 @@ public class JooqApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 	public List fetchCursor(String cursorId) {
 
 		DSLContext fetchCursor = DSL.using(getConnection(), SQLDialect.MYSQL);
-		Result<Record> result = fetchCursor.select().from(APPLICATION_CURSORS).fetch();
+	     SelectConditionStep<Record> result = fetchCursor.select().from(APPLICATION_CURSORS)
+	    		 .where(APPLICATION_CURSORS.CURSOR_ID.eq(cursorId));
+		// prepare as list.
+		List<AppCursorDto> list = new ArrayList<>(); // diamond operator
+		list = result.stream().map((rec) -> {
+			AppCursorDto dto = new AppCursorDto();
+			dto.setId(rec.get(APPLICATION_CURSORS.ID));
+			dto.setName(rec.get(APPLICATION_CURSORS.NAME));
+			dto.setNonce(rec.get(APPLICATION_CURSORS.NONCE));
+			dto.setPosX(rec.get(APPLICATION_CURSORS.POS_X));
+			dto.setPosY(rec.get(APPLICATION_CURSORS.POS_Y));
 
-		return null;
+			return dto;
+		}).collect(Collectors.toList());
+
+		return list;
+
 	}
 
 	public List<AppCursorDto> fetchCursors() {
@@ -63,7 +80,7 @@ public class JooqApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 		Result<Record> result = fetchCursor.select().from(APPLICATION_CURSORS).fetch();
 
 		// prepare as list.
-		List<AppCursorDto> list = new ArrayList<>(); //diamond operator
+		List<AppCursorDto> list = new ArrayList<>(); // diamond operator
 		list = result.stream().map((rec) -> {
 			AppCursorDto dto = new AppCursorDto();
 			dto.setId(rec.get(APPLICATION_CURSORS.ID));

@@ -1,6 +1,7 @@
 package com.app.controllers;
 
-import static com.app.dao.AbstractApplicationCursorDao.JDBC;
+import static com.app.dao.AbstractApplicationCursorDao.*;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 	// JOOQ is the vendor
 	{
-		cursorServices = new ApplicationCursorServiceImpl(JDBC); // JDBC.
+		cursorServices = new ApplicationCursorServiceImpl(JOOQ); // JDBC.
 	}
 
 	@Override
