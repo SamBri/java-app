@@ -11,49 +11,44 @@ import com.sun.net.httpserver.HttpHandler;
 //api
 public class APIControllerHandlerImpl implements HttpHandler {
 
-	enum Services {
-		RELIABLE, USERS;
-
-		static Services asService(String path) {
-			path = path.replace("/", "");
-			return Services.valueOf(path);
-
-		}
-
-		static Services asService(URI uri, String root) {
-			String path = uri.getPath().replace(root, "");
-			path = path.replace("/", "");
-			return Services.valueOf(String.format("%S", path));
-
-		}
-
-	}
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 
 		URI requestUri = exchange.getRequestURI();
 		System.out.println(requestUri.toString());
+		System.out.println("exchange request @ headers:" + exchange.getRequestHeaders().toString());
 
-		Services service = requestUri.getPath().startsWith("/api") ? Services.asService(requestUri, "/api") : null;
+	//	String path = PathUtils.canonicalise(requestUri, "/api");
+
+		String serviceUrl = exchange.getServiceUrl();
+		
 		System.out.println(exchange.getRequestURI());
 
 		HttpHandler handler = null;
 
-		handler = switch (service) {
-		case RELIABLE: {
+		handler = switch (serviceUrl) {
+		case "/reliable/cursors":
+		case "/reliable/cursors/*": {
 			handler = new ReliableControllerHandlerImpl();
 			yield handler;
 		}
-		case USERS: {
+		case "/users": {
 			handler = new UsersControllerHandlerImpl();
 			yield handler;
 		}
 		default:
-			throw new UnsupportedOperationException("Handler not found : " + service);
+			throw new UnsupportedOperationException("Handler not found : " + serviceUrl);
 		};
 
 		handler.handle(exchange);
+
+	}
+
+	public static void main(String[] args) {
+	//	System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/test"), "/api"));
+	
+	//	System.out.println(PathUtils.canonicalise(URI.create("/api/reliable/cursors/"), "/api"));
 
 	}
 

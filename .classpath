@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
+			<attribute name="limit-modules" value="java.instrument,java.net.http,java.scripting,java.smartcardio,java.sql.rowset,java.xml.crypto,jdk.accessibility,jdk.dynalink,jdk.jartool,jdk.javadoc,jdk.jconsole,jdk.jshell,jdk.jsobject,jdk.management.jfr,jdk.net,jdk.nio.mapmode,jdk.sctp,jdk.security.auth,jdk.security.jgss,jdk.unsupported,jdk.unsupported.desktop,jdk.xml.dom,jdk.crypto.cryptoki"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/lombok-1.18.38.jar"/>
@@ -13,6 +14,8 @@
 	<classpathentry kind="lib" path="lib/jakarta.xml.bind-api-3.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/reactive-streams-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/r2dbc-spi-1.0.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.30.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.10.1.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-j-9.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/jdk-httpserver-custom-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
