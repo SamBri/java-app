@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+
 // /reliable/cursors - Create Cursors | POST
 // /reliable/cursors - Fetch All Cursors | GET
 // /reliable/cursors/:cursorId - Fetch Cursor by cursorId | GET
@@ -34,7 +35,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 
 	// JOOQ is the vendor
 	{
-		cursorServices = new ApplicationCursorServiceImpl(JDBC); // JDBC.
+		cursorServices = new ApplicationCursorServiceImpl(JPA); // JDBC.
 	}
 
 	@Override
