@@ -5,40 +5,42 @@ public class Bucket implements BucketOperator {
 
 	@Override
 	public Bucket init() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
 	public Bucket load() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
 	public Bucket create() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
 	public Bucket store(Object... objects) {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
 	public Bucket retrieve(int... ids) {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
 	public Bucket search(int... ids) {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 	
+	
+	
+	public static void main(String[] args) {
+		
+		// sample contract.
+		Bucket memories = new Bucket();
+		
+	}
   
 	
 	
