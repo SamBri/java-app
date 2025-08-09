@@ -4,6 +4,8 @@ public interface BucketOperator {
 
 	// init
 	public Bucket init();
+	
+
 
 	// load
 	public Bucket load();
@@ -19,5 +21,7 @@ public interface BucketOperator {
 
 	// search
 	public Bucket search(int... ids);
+	
+	public Bucket list();
 
 }
