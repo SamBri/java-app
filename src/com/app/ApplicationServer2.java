@@ -8,13 +8,8 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 
-
-
-
-
 public class ApplicationServer2 {
 
-	
 
 
 	public static void main(String[] args) throws IOException {
