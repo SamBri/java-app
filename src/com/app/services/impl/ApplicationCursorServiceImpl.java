@@ -49,7 +49,7 @@ public class ApplicationCursorServiceImpl implements ApplicationCursorService {
 			yield new MoetApplicationCursorDaoImpl();
 		// yield new com.app.dao.impl.orm.moet.ApplicationCursorDaoImpl();
 		case HIBERNATE:
-			yield new HibernateApplicationCursorDaoImpl();
+			yield  new HibernateApplicationCursorDaoImpl();
 		// yield new com.app.dao.impl.orm.hibernate.ApplicationCursorDaoImpl();
 		default:
 			yield new JooqApplicationCursorDaoImpl();

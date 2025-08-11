@@ -16,7 +16,7 @@ public class ApplicationServer2 {
 	
 		HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
        
-		server.createContext("/", new APIControllerHandlerImpl2() );
+		server.createContext("/api", new APIControllerHandlerImpl2() );
         server.setExecutor(null); // creates a default executor
         server.start();
         System.out.println("Server started on port 8001");

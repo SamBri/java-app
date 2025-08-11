@@ -4,35 +4,45 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
 import com.app.dao.AbstractApplicationCursorDao;
 import com.app.dto.AppCursorDto;
+import com.app.entity.ApplicationCursor;
 
 //Application Cursor Dao
 public class HibernateApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 
-	private String userName = "root";
-	private String password = "BlueObjectx1"; // change as you want
-	private String url = "jdbc:mysql://localhost:3306/java_app";
+	private SessionFactory sessionFactory;
 
 // make a db connection.
-	public Connection getConnection() {
+	public SessionFactory  getSession() {
 
-		try {
-			// Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+  	  // A SessionFactory is set up once for an application!
+        final StandardServiceRegistry registry =
+                new StandardServiceRegistryBuilder()
+                        .build();     
+        try {
+        	SessionFactory  sessionFactory =
+                    new MetadataSources(registry)             
+                            .addAnnotatedClass(ApplicationCursor.class)   
+                            .buildMetadata()                  
+                            .buildSessionFactory();    
+        	
+    		return sessionFactory;
 
-			// System.setProperty("javax.net.ssl.keyStore","C:\\ProgramData\\MySQL\\MySQL
-			// Server 8.0\\Data\\keystore");
-			// System.setProperty("javax.net.ssl.keyStorePassword",password);
-
-			Connection conn = DriverManager.getConnection(url, userName, password);
-			return conn;
-		}
-
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+            // The registry would be destroyed by the SessionFactory, but we
+            // had trouble building the SessionFactory so destroy it manually.
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        
+        return null;
 	}
 
 	public List fetchCursor(String cursorId) {
@@ -50,5 +60,8 @@ public class HibernateApplicationCursorDaoImpl extends AbstractApplicationCursor
 
 		return -1;
 	}
+	
+	
+	
 
 }
