@@ -5,6 +5,7 @@ import java.net.URI;
 
 import com.app.controllers.ReliableControllerHandlerImpl;
 import com.app.controllers.UsersControllerHandlerImpl;
+import com.app.io.JsonControllerHandlerImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -35,6 +36,10 @@ public class APIControllerHandlerImpl2 implements HttpHandler {
 		}
 		case "/users": {
 			handler = new UsersControllerHandlerImpl();
+			yield handler;
+		}
+		case "/json": {
+			handler = new JsonControllerHandlerImpl(); // json controller
 			yield handler;
 		}
 		default:
