@@ -29,16 +29,24 @@ public class JsonControllerHandlerImpl implements HttpHandler {
 
 		
 		if(exchange.getRequestMethod().equalsIgnoreCase("GET")) {
-			
+
 			// read constants from json file.
 			JsonElement codes_file = null;
 			JsonObject codes_file_jsonObject = null;
-			try(BufferedReader br = new BufferedReader(new FileReader("codes.json"))){
-				codes_file = JsonParser.parseReader(br);
-				codes_file_jsonObject =	codes_file.getAsJsonObject();
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+			
+			// poor io, performance , resource leaks and security vunerability
+			codes_file = JsonParser.parseReader(new FileReader("codes.json"));
+			codes_file_jsonObject = codes_file.getAsJsonObject();
+			
+		// improved io operations, resource leaks - memory consumptions	
+//			try (BufferedReader br = new BufferedReader(new FileReader("codes.json"))) {
+//				codes_file = JsonParser.parseReader(br);
+//				codes_file_jsonObject = codes_file.getAsJsonObject();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+
+		
 			
 			String controllerResponse = """
 					{
