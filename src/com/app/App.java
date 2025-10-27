@@ -15,8 +15,7 @@ import com.app.bridges.objects.Keyboard;
 import com.app.bridges.objects.TypeWriter;
 import com.app.bridges.writers.TextWriter;
 import com.app.controllers.ReliableControllerHandlerImpl;
-import com.app.dao.UserDAO;
-import com.app.dao.impl.UserDAOImpl;
+
 import com.app.factory.DAOFactory;
 
 import io.sdk.apple.AppleKeyboard;

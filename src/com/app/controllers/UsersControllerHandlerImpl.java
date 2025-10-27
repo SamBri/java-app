@@ -1,23 +1,27 @@
 package com.app.controllers;
 
-import org.jooq.Result;
+import static com.app.dao.AbstractApplicationCursorDao.JDBC;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
-import org.jooq.Record;
-
-import com.app.dao.impl.jooq.ApplicationCursorDaoImpl;
-import com.app.dto.AppCursorDto;
+import com.app.services.UserService;
+import com.app.services.impl.UserServiceImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 // /reliable/cursors
 // /reliable/cursors
 public class UsersControllerHandlerImpl implements HttpHandler {
+	
+	
+	private UserService userService;
+
+	// JOOQ is the vendor
+	{
+		userService = new UserServiceImpl(JDBC); // JDBC.
+	}
+
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {

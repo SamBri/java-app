@@ -11,6 +11,8 @@ import com.sun.net.httpserver.HttpHandler;
 //api
 public class APIControllerHandlerImpl2 implements HttpHandler {
 
+	// target end user - corporation.
+	// Fast, Secure, RELIABLE. - 100000000 . base customers.
 
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
