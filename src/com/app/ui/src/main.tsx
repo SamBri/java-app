@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   },
 
   {
-     path: '/notes',
+     path: '/service',
      element: <SaveNote />,
    },
    {
