@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.sun.net.httpserver.AbstractJwtUtil;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class ApplicationJwtUtil {
+public class MyApplicationJwtUtil extends AbstractJwtUtil {
 
     private final String secret = "sR3ugAly675HmC8n5ex8b1axEAI1ZH9WpaPV1hLUPSY08OOuBIn";
 
@@ -26,7 +28,7 @@ public class ApplicationJwtUtil {
         return createToken(claims, userDetails.getUsername());
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
+    protected String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -49,12 +51,12 @@ public class ApplicationJwtUtil {
         return extractClaim(token, claims->claims.getExpiration());
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    protected <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    protected Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(getSignKey())
                 .build()
@@ -62,11 +64,11 @@ public class ApplicationJwtUtil {
                 .getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    protected Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    private Key getSignKey() {
+    protected Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }

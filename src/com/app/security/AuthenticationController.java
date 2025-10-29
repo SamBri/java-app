@@ -17,7 +17,7 @@ import com.app.services.impl.UserServiceImpl;
 public class AuthenticationController {
 	
 	
-	private ApplicationJwtUtil appJwtUtil;
+	private MyApplicationJwtUtil appJwtUtil;
 	
 	private UserService userService;
 	
@@ -26,7 +26,7 @@ public class AuthenticationController {
 		userService = new  UserServiceImpl(JDBC); // JDBC.
 	}
 	
-	public AuthenticationController(ApplicationJwtUtil appJwtUtil, UserService userService) {
+	public AuthenticationController(MyApplicationJwtUtil appJwtUtil, UserService userService) {
 		this.appJwtUtil = appJwtUtil;
 		this.userService = userService;
 	}
