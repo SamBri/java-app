@@ -48,8 +48,8 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 		// String service = exchange.getRequestURI().getPath().replace("/api/reliable",
 		// ""); // remove the root for service
 
-		String serviceUrl = exchange.getServiceUrl();
-		String service = serviceUrl.replace("/reliable", "");
+		String serviceUrl = exchange.getRawServiceUrl();
+		String service = serviceUrl.replace("/api/reliable", "");
 		
 		
 
@@ -120,6 +120,7 @@ public class ReliableControllerHandlerImpl implements HttpHandler {
 				}
 
 				};
+				break;
 			}
 			case "/cursors/*": {
 				response = switch (method) {

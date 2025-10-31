@@ -29,7 +29,7 @@ public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 		EntityManagerFactory eclipseLinkJpaEmf = new PersistenceConfiguration("JavaAppPU") // class file alternative to persistence.xml
 				.managedClass(ApplicationCursor.class)
 				.jtaDataSource("jdbc/java_app")
-				.property(JDBC_URL, "jdbc:mysql://localhost:3306/java_app")
+				.property(JDBC_URL, "jdbc:mysql://localhost:3306/java_app?enabledTLSProtocols=TLSv1.2")
 				.property(JDBC_USER, "root")
 				.property(JDBC_PASSWORD, "BlueObjectx1")
 				.property(JDBC_DRIVER, "com.mysql.cj.jdbc.Driver")
@@ -81,7 +81,7 @@ public class JpaApplicationCursorDaoImpl extends AbstractApplicationCursorDao {
 		// using jpa - persistence provider is EclipseLink.
 	EntityManagerFactory jpa = new PersistenceConfiguration("JavaAppPU") // class file alternative to persistence.xml
 			.managedClass(ApplicationCursor.class)
-			.property(JDBC_URL, "jdbc:mysql://localhost:3306/java_app")
+			.property(JDBC_URL, "jdbc:mysql://localhost:3306/java_app?enabledTLSProtocols=TLSv1.2")
 			.property(JDBC_USER, "root")
 			.property(JDBC_PASSWORD, "BlueObjectx1")
 			.property(JDBC_DRIVER, "com.mysql.cj.jdbc.Driver")

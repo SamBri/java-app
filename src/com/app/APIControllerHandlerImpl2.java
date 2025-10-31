@@ -22,12 +22,13 @@ public class APIControllerHandlerImpl2 implements HttpHandler {
 		System.out.println(requestUri.toString());
 		System.out.println("exchange request @ headers:" + exchange.getRequestHeaders().toString());
 
-	//	String path = PathUtils.canonicalise(requestUri, "/api");
 
-		String serviceUrl = exchange.getServiceUrl();
+		String serviceUrl = exchange.getRawServiceUrl();
 		
-		System.out.println("@@@@@@22"+serviceUrl);
+		System.out.println(serviceUrl);
 		System.out.println(exchange.getRequestURI());
+
+		serviceUrl = serviceUrl.replace("/api", "");
 
 		HttpHandler handler = null;
 		

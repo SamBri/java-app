@@ -15,7 +15,12 @@ import com.sun.net.httpserver.HttpServer;
 
 public class ApplicationServer2 {
 
-
+//TODO:
+	// 1. expired jwt handling
+	// 2. dynamic path handling.
+	
+	// issues 
+	// 1. mysql client server ssl communication.
 
 	public static void main(String[] args) throws IOException {
 	
