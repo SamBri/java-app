@@ -4,9 +4,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import com.sun.net.httpserver.AbstractJwtUtil;
 
@@ -16,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Component
+import javax.crypto.spec.SecretKeySpec;
+
 public class MyApplicationJwtUtil extends AbstractJwtUtil {
 
     private final String secret = "sR3ugAly675HmC8n5ex8b1axEAI1ZH9WpaPV1hLUPSY08OOuBIn";
@@ -71,5 +70,23 @@ public class MyApplicationJwtUtil extends AbstractJwtUtil {
     protected Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+    
+    
+    public static void main(String[] args) {
+        // Create a signing key (for HMAC-SHA algorithms)
+        String secretString = "thisismyverysecretkeyforjwtsigning";
+        Key key = new SecretKeySpec(secretString.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+
+        // Build the JWT
+        String jwt = Jwts.builder()
+                .setSubject("user123")
+                .claim("role", "admin")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hour expiration
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact(); // Finalize and compact the JWT
+
+        System.out.println("Generated JWT: " + jwt);
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.app.dto.AppCursorDto;
+import com.app.entity.User;
 
 public abstract class AbstractUserDao implements UserDetailsService {
 	
@@ -14,13 +14,13 @@ public abstract class AbstractUserDao implements UserDetailsService {
 	public final static int MOET = 4;
 	public final static int JDBC = 5;
 
-	public abstract void createUser();
+	public abstract User createUser(User user);
 
-	public abstract void getUsers();
+	public abstract List<User> getUsers();
 
-	public abstract void getUserById(int i);
+	public abstract User getUserById(int i);
 
-	public abstract void updateUser(int userId);
+	public abstract User updateUser(int userId);
 
 	public abstract void deleteUser(int userId);
 

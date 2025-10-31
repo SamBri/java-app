@@ -5,6 +5,7 @@ import java.net.URI;
 
 import com.app.controllers.ReliableControllerHandlerImpl;
 import com.app.controllers.UsersControllerHandlerImpl;
+import com.app.security.AuthenticationController;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -25,23 +26,30 @@ public class APIControllerHandlerImpl2 implements HttpHandler {
 
 		String serviceUrl = exchange.getServiceUrl();
 		
+		System.out.println("@@@@@@22"+serviceUrl);
 		System.out.println(exchange.getRequestURI());
 
 		HttpHandler handler = null;
+		
+		if(exchange.getRequestURI().toString().startsWith("/auth")) {
+			handler = new AuthenticationController();
+		}else {
+			handler = switch (serviceUrl) {
+			case "/reliable/cursors":
+			case "/reliable/cursors/*": {
+				handler = new ReliableControllerHandlerImpl();
+				yield handler;
+			}
+			case "/users": {
+				handler = new UsersControllerHandlerImpl();
+				yield handler;
+			}
+			default:
+				throw new UnsupportedOperationException("Handler not found : " + serviceUrl);
+			};
+		}
 
-		handler = switch (serviceUrl) {
-		case "/reliable/cursors":
-		case "/reliable/cursors/*": {
-			handler = new ReliableControllerHandlerImpl();
-			yield handler;
-		}
-		case "/users": {
-			handler = new UsersControllerHandlerImpl();
-			yield handler;
-		}
-		default:
-			throw new UnsupportedOperationException("Handler not found : " + serviceUrl);
-		};
+
 
 		handler.handle(exchange);
 

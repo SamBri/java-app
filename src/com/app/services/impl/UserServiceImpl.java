@@ -31,37 +31,36 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User createUser(User user) {
-		// TODO Auto-generated method stub
-    return null;
+
+		user =	this.abstractDao.createUser(user);
+		return user;
 	}
 
 	@Override
 	public List<User> getUsers() {
-		// TODO Auto-generated method stub
-     return null;
+     return this.abstractDao.getUsers();
 	}
 
 	@Override
 	public User getUserById(int i) {
-		// TODO Auto-generated method stub
-     return null;
+     return this.abstractDao.getUserById(i);
 	}
 
 	@Override
 	public User updateUser(int userId) {
-		// TODO Auto-generated method stub
- return null;
+    return this.abstractDao.updateUser(userId);
 	}
 
 	@Override
 	public void deleteUser(int userId) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return abstractDao.loadUserByUsername(username);
 	}
 
