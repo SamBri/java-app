@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
-function ListNote() {
+function DeletePlatform() {
 	const navigate = useNavigate();
 
 
@@ -171,4 +171,4 @@ function ListNote() {
 					);
 };
 
-					export default ListNote;
+					export default DeletePlatform;

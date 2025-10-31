@@ -18,11 +18,11 @@ export default defineConfig({
   server: {
       proxy: {
          '/api': {
-          target: 'http://localhost:8088',
+          target: 'http://localhost:8002',
           changeOrigin: true,
         },
-		'/user': {
-		       target: 'http://localhost:8088', // Backend 2
+		'/auth': {
+		       target: 'http://localhost:8002', // Backend 2
 		       changeOrigin: true,
 		     },
       },

@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
-function SaveNote() {
+function SavePlatform() {
 	const navigate = useNavigate();
 
-	const [title, setTitle] = useState('');
-	const [content, setContent] = useState('');
-	const [tags, setTags] = useState('');
+	const [name, setName] = useState('');
+	const [url, setUrl] = useState('');
+	const [resources, setResources] = useState('');
 	
 	
 
@@ -21,10 +21,10 @@ function SaveNote() {
 	const handleSave = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 
-		const note = {
-			title: "",
-			content: "",
-			tags:  [] as string[]
+		const platform = {
+			name: "",
+			url: "",
+			resources:  [] as string[]
 		};
 		
 
@@ -33,21 +33,21 @@ function SaveNote() {
 		console.log(token?.toString);
 
 
-			note.title = title;
-			note.content = content;
-			if (tags.includes(",")) { // list of tags
+			platform.name = name;
+			platform.url = url;
+			if (resources.includes(",")) { // list of tags
 
-				const listOfTags: string[] = tags.split(",");
+				const listOfResources: string[] = resources.split(",");
 
-				for (const tag of listOfTags) {
-					note.tags.push(tag);
+				for (const resource of listOfResources) {
+					platform.resources.push(resource);
 				}
 			}
 			
-			if (!tags.includes(",")) { // single item
+			if (!resources.includes(",")) { // single item
 
 
-					note.tags.push(tags);
+					platform.resources.push(resources);
 			
 			}
 
@@ -59,7 +59,7 @@ function SaveNote() {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${token}`
 			},
-			body: JSON.stringify(note),
+			body: JSON.stringify(platform),
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -70,14 +70,14 @@ function SaveNote() {
 			.then((jsonResponse) => {
 
 				try {
-					console.log('save note api call was successful:', jsonResponse)
+					console.log('save platform api call was successful:', jsonResponse)
 					if (jsonResponse.status === "failed") {
-						console.log("failed save note ")
+						console.log("failed save platform ")
 						const errorAlert = document.getElementById('error-alert');
 						if (errorAlert) {
 							errorAlert.removeAttribute('hidden');
 						}
-						throw new Error("save note failed.");
+						throw new Error("save platform failed.");
 					
 					} else {
 						setError(null)
@@ -88,7 +88,7 @@ function SaveNote() {
 						}
 						setData(jsonResponse.message);
 
-						navigate('/notes'); // Redirect to notes wigdets
+						navigate('/platforms'); // Redirect to notes wigdets
 
 					}
 				} catch (err) {
@@ -107,13 +107,15 @@ function SaveNote() {
 	const handleEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 
-		const note = {
-			title: "",
-			content: "",
-			tags: []
+		const platform = {
+			name: "",
+			url: "",
+			resources: []
 		};
-		note.title = title;
-		note.content = content;
+		platform.name = name;
+		platform.url = url;
+	//	platform.resources = resources;
+
 
 		const token = localStorage.getItem('jwtToken');
 
@@ -124,7 +126,7 @@ function SaveNote() {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${token}`
 			},
-			body: JSON.stringify(note),
+			body: JSON.stringify(platform),
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -161,13 +163,13 @@ function SaveNote() {
 	const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 
-		const note = {
-			title: "",
-			content: "",
-			tags: []
+		const platform = {
+			name: "",
+			url: "",
+			resources: []
 		};
-		note.title = title;
-		note.content = content;
+		platform.name = name;
+		platform.url = url;
 
 		const token = localStorage.getItem('jwtToken');
 
@@ -178,7 +180,7 @@ function SaveNote() {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${token}`
 			},
-			body: JSON.stringify(note),
+			body: JSON.stringify(platform),
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -214,13 +216,13 @@ function SaveNote() {
 	const handleView = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 
-		const note = {
-			title: "",
-			content: "",
-			tags: []
+		const platform = {
+			name: "",
+			url: "",
+			resources: []
 		};
-		note.title = title;
-		note.content = content;
+		platform.name = name;
+		platform.url = url;
 
 		const token = localStorage.getItem('jwtToken');
 
@@ -231,7 +233,7 @@ function SaveNote() {
 				'Content-Type': 'application/json',
 				'Authorization': `Bearer ${token}`
 			},
-			body: JSON.stringify(note),
+			body: JSON.stringify(platform),
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -242,14 +244,14 @@ function SaveNote() {
 			.then((jsonResponse) => {
 
 				try {
-					console.log('save note api call was successful:', jsonResponse)
+					console.log('save platform api call was successful:', jsonResponse)
 					if (jsonResponse.status === "failed") {
 						console.log("failed save note ")
 						throw new Error("save note failed.");
 					} else {
 						setError(null)
-						console.log("save note success")
-						navigate('/notes'); // Redirect to notes wigdets
+						console.log("save plaftorm success")
+						navigate('/platforms'); // Redirect to notes wigdets
 
 					}
 				} catch (err) {
@@ -276,7 +278,7 @@ function SaveNote() {
 	return (
 		<div className="container" >
 			<div className="row justify-content-center" style={{ marginLeft: '30rem' }}>
-				<h2 style={{ textAlign: 'center' }}>Notes 5.0</h2>
+				<h2 style={{ textAlign: 'center' }}>Platform</h2>
 				
 			
 				<div   id="success-alert" hidden={true} className="alert alert-success" role="alert">
@@ -296,31 +298,38 @@ function SaveNote() {
 						<div className="card-body">
 							<form >
 							<div className="mb-3">
-										<label htmlFor="title" className="form-label">Title</label>
+										<label htmlFor="title" className="form-label">Name</label>
 										<input
 											type="text"
 											className="form-control"
-											id="title"
-											value={title}
-											onChange={(e) => setTitle(e.target.value)}
+											id="name"
+											value={name}
+											onChange={(e) => setName(e.target.value)}
 
 										/>
 									</div>
-									<div className="mb-3">
-										<label htmlFor="content" className="form-label">Content</label>
-										<textarea className="form-control" id="content" rows={4} value={content} onChange={(e) => setContent(e.target.value)}
-										></textarea>
-									</div>
 									
+									
+									<div className="mb-3">
+												<label htmlFor="title" className="form-label">URL</label>
+												<input
+													type="text"
+													className="form-control"
+													id="url"
+													value={url}
+													onChange={(e) => setUrl(e.target.value)}
 
+												/>
+											</div>
+											
 								<div className="mb-3">
-									<label htmlFor="tags" className="form-label">Tags</label>
+									<label htmlFor="tags" className="form-label">Resources</label>
 									<input
 										type="text"
 										className="form-control"
 										id="tags"
-										value={tags}
-										onChange={(e) => setTags(e.target.value)}
+										value={resources}
+										onChange={(e) => setResources(e.target.value)}
 
 									/>
 								</div>
@@ -328,7 +337,7 @@ function SaveNote() {
 								<div className="text-center mb-3">
 								
 								  <button data-mdb-ripple-init type="button" onClick={handleSave} className="btn btn-secondary btn-floating mx-1">
-								  	Save
+								  	Create
 								  </button>
 
 
@@ -343,7 +352,7 @@ function SaveNote() {
 
 
 								  <button data-mdb-ripple-init type="button" onClick={handleView} className="btn btn-secondary btn-floating mx-1">
-								  	View
+								  	List
 								  </button>
 								  
 								  
@@ -364,4 +373,4 @@ function SaveNote() {
 					);
 };
 
-					export default SaveNote;
+					export default SavePlatform;

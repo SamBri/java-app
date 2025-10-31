@@ -6,8 +6,8 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import Signup from './Signup.tsx'
-import SaveNote from './SaveNote.tsx'
-import SearchNote from './SearchNote.tsx'
+import SavePlatform from './SavePlatform.tsx'
+//import SearchNote from './SearchNote.tsx'
 
 
 const router = createBrowserRouter([
@@ -17,17 +17,17 @@ const router = createBrowserRouter([
   },
 
   {
-     path: '/service',
-     element: <SaveNote />,
+     path: '/platforms',
+     element: <SavePlatform />,
    },
    {
         path: '/signup',
         element: <Signup />,
-      },
-	  {
-	         path: '/notes-search',
-	         element: <SearchNote />,
-	       }
+      }
+//	  {
+//	         path: '/notes-search',
+//	         element: <SearchNote />,
+//	       }
 ]);
 
 createRoot(document.getElementById('root')!).render(

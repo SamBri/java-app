@@ -23,7 +23,7 @@ function Signup() {
 		user.username = username;
 		user.password = password;
 
-		fetch('/user/signup', {
+		fetch('/auth/signup', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ function Signup() {
 						setData(jsonResponse.message); // no message
 
 						
-							navigate("/notes")
+							navigate("/platforms")
 					
 
 
@@ -89,7 +89,7 @@ function Signup() {
 	return (
 		<div className="container" >
 			<div className="row justify-content-center" style={{ marginLeft: '30rem' }}>
-				<h2 style={{ textAlign: 'center' }}>Notes 5.0</h2>
+				<h2 style={{ textAlign: 'center' }}>Platform</h2>
 
 
 

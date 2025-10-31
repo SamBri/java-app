@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
-function DeleteNote() {
+function ListPlatform() {
 	const navigate = useNavigate();
 
 
@@ -121,7 +121,7 @@ function DeleteNote() {
 											type="text"
 											className="form-control"
 											id="title"
-											placeholder="Search by note title or content"
+											placeholder="Search by platform by name or url"
 											value={query}
 											onChange={(e) => setQuery(e.target.value)}
 
@@ -130,16 +130,15 @@ function DeleteNote() {
 									
 									<div id="table-card" className="mb-3" hidden>
 
-								 <span style={{fontWeight:'bold'}}>My notes</span>
+								 <span style={{fontWeight:'bold'}}>My platforms</span>
 								
 								<table className="table" id="notes-table" >
 									<thead>
 										<tr>
 										    <th>#</th>
-											<th>Title</th>
-											<th>Content</th>
-											<th>Date created</th>
-											<th>Tags</th>
+											<th>Name</th>
+											<th>Url</th>
+											<th>Resources</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -171,4 +170,4 @@ function DeleteNote() {
 					);
 };
 
-					export default DeleteNote;
+					export default ListPlatform;

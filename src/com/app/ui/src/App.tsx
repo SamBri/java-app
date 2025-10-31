@@ -21,7 +21,7 @@ function App() {
 	 user.username = username;
 	 user.password = password;
 	 
-    fetch('/user/authentication', {
+    fetch('/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function App() {
 			console.log("login success")
 			localStorage.setItem('jwtToken', jsonResponse.data);
 
-			navigate('/notes'); // Redirect to notes wigdets
+			navigate('/platforms'); // Redirect to notes wigdets
 
 		}
 		} catch (err) {
@@ -80,7 +80,7 @@ function App() {
   return (
     <div className="container" >
       <div className="row justify-content-center" style={{marginLeft:'30rem'}}>
-	  <h2 style={{ textAlign:'center' }}>Notes 5.0</h2> 
+	  <h2 style={{ textAlign:'center' }}>Platform</h2> 
 	  
 	  <div   id="error-alert" hidden={true} className="alert alert-danger" role="alert">
 
@@ -117,7 +117,7 @@ function App() {
                 </div>
                 <button type="submit" className="btn btn-primary" style={{ marginLeft:'35%', width:"35%" }}>Login</button>
 				<div className="text-center" style={{paddingTop:'5%'}} >
-					    <p><a href="!#" onClick={handleSignup}>Signup to Notes</a></p>
+					    <p><a href="!#" onClick={handleSignup}>Signup to Platform</a></p>
 				</div>
 				 </form>
             </div>
